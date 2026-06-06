@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎆 2026 澎湖花火節三天兩夜旅遊隨身手冊</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #f59e0b;
+            --danger: #b91c1c;
+            --danger-light: #fff5f5;
+            --success: #047857;
+            --success-light: #f0fdf4;
+            --text-main: #2d3748;
+            --bg-body: #f8fafc;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* 頂部華麗橫幅 */
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a, #312e81);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* 手機版必備：置頂快捷導覽列 */
+        nav {
+            display: flex;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto; /* 寬度不夠時可左右滑動 */
+            white-space: nowrap;
+        }
+
+        nav a {
+            flex: 1;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background-color: var(--primary-light);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 12px;
+        }
+
+        /* 大區塊卡片 */
+        .section-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            scroll-margin-top: 55px; /* 防止跳轉時被導覽列遮擋 */
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* 1. 航班交通表格樣式 */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 10px 12px;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-top: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .transport-badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: inline-block;
+            border: 1px solid #bae6fd;
+        }
+
+        /* 2. 三天行程路線樣式 */
+        .day-box {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #ffffff;
+        }
+
+        .day-header {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 5px;
+        }
+
+        .flow-list {
+            list-style: none;
+        }
+
+        .flow-step {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+
+        .flow-step::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .flow-step:first-child::before {
+            content: "📍";
+        }
+
+        .flow-step strong {
+            color: #0f172a;
+            background-color: #fffbeb;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* 3. 四大美食區域網格 */
+        .food-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media(min-width: 768px) {
+            .food-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .food-card {
+            background-color: var(--success-light);
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .food-card h4 {
+            color: var(--success);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #bbf7d0;
+            padding-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .food-list {
+            list-style-type: square;
+            padding-left: 18px;
+            font-size: 0.9rem;
+        }
+
+        .food-list li {
+            margin-bottom: 5px;
+        }
+
+        /* 4. 注意事項區塊 */
+        .alert-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #d97706;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+        }
+
+        .alert-box h4 {
+            color: #b45309;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .alert-sublist {
+            padding-left: 18px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .alert-sublist li {
+            margin-bottom: 4px;
+        }
+
+        .highlight-danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎆 2026 澎湖花火節隨身手冊</h1>
+        <p>三天兩夜自主遊 · 行程 / 美食 / 飛安一網打盡</p>
+    </header>
+
+    <nav>
+        <a href="#traffic">✈️ 航班交通</a>
+        <a href="#itinerary">🗺️ 三天行程</a>
+        <a href="#food">🍽️ 在地美食</a>
+        <a href="#notice">📋 搭機須知</a>
+    </nav>
+
+    <div class="container">
+
+        <section id="traffic" class="section-card">
+            <h2 class="section-title">1. 航班與島上交通資訊</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>航程性質</th>
+                            <th>起飛 - 抵達時間</th>
+                            <th>出發 ➔ 抵達機場</th>
+                            <th style="text-align: center;">航班天數</th>
+                            <th>航班編號</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>去程航班</strong></td>
+                            <td>2026/06/18 (四) 07:50 - 08:35</td>
+                            <td>高雄小港機場 ➔ 澎湖馬公機場</td>
+                            <td style="text-align: center;">第 1 天</td>
+                            <td><strong>B7-8691</strong> (立榮)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>回程航班</strong></td>
+                            <td>2026/06/20 (六) 17:10 - 17:50</td>
+                            <td>澎湖馬公機場 ➔ 高雄小港機場</td>
+                            <td style="text-align: center;">第 3 天</td>
+                            <td><strong>B7-9172</strong> (立榮)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="transport-badge">
+                🚗 <strong>島上租賃配置：</strong> 1 台汽車 ＋ 2 台機車（極佳的分流代步組合）
+            </div>
+        </section>
+
+
+        <section id="itinerary" class="section-card">
+            <h2 class="section-title">2. 三天兩夜花火節精彩行程</h2>
+            
+            <div class="day-box">
+                <div class="day-header">📍 Day 1：摩西分海奇景與花火夜</div>
+                <div class="flow-list">
+                    <div class="flow-step">抵達馬公機場 ➔ 前往 <strong>小島嶼民宿</strong> 辦理手續、取汽機車寄放行李</div>
+                    <div class="flow-step">午餐享用澎湖經典 <strong>馬路益燒肉飯</strong></div>
+                    <div class="flow-step">前往隔壁喝杯沁涼 <strong>劉正港檸檬汁</strong></div>
+                    <div class="flow-step">下午至 <strong>澎湖水族館</strong> 吹冷氣，觀賞精彩海洋生態與海底隧道</div>
+                    <div class="flow-step">點心時間品嚐超人氣 <strong>澎湖回家炸粿</strong></div>
+                    <div class="flow-step">驚嘆奇景 <strong>奎壁山摩西分海</strong>（*出發前務必確認當天退潮開海時間）</div>
+                    <div class="flow-step">漫步充滿文青感、色彩斑斕的 <strong>南寮古厝浮球秘境</strong></div>
+                    <div class="flow-step">晚餐享用道地新鮮澎湃的 <strong>龍門海鮮</strong></div>
+                    <div class="flow-step">深夜重頭戲：前往觀音亭觀賞 <strong>澎湖花火節</strong>（璀璨煙火與無人機科技大秀）</div>
+                </div>
+            </div>
+
+            <div class="day-box">
+                <div class="day-header">📍 Day 2：北環島經典長征與激爽水上活動</div>
+                <div class="flow-list">
+                    <div class="flow-step">民宿出發 ➔ 享用文康商圈招牌早餐 <strong>鐘記燒餅</strong></div>
+                    <div class="flow-step">漫步走訪絕美海景秘境 <strong>後寮天堂路</strong></div>
+                    <div class="flow-step">經典地標拍照打卡 <strong>澎湖跨海大橋</strong></div>
+                    <div class="flow-step">消暑必吃酸甜酸甜的 <strong>易家仙人掌冰</strong></div>
+                    <div class="flow-step">探訪大自然海蝕洞奇觀 <strong>小門鯨魚洞</strong></div>
+                    <div class="flow-step">午餐享用 <strong>小萍的店</strong> 招牌鮮美小管麵線</div>
+                    <div class="flow-step">散步具有閩南歷史古風的 <strong>二崁聚落</strong> 喝杏仁茶</div>
+                    <div class="flow-step">參觀 <strong>竹灣大義宮彩色珊瑚洞</strong> 瞧瞧綠蠵龜 ➔ 打卡 <strong>竹灣立體大海龜</strong></div>
+                    <div class="flow-step">親眼見證宏偉壯觀的 <strong>池東大菓葉柱狀玄武岩</strong> 與 <strong>池西岩瀑</strong></div>
+                    <div class="flow-step">漫步於海中央的網美聖地 <strong>小池雙曲橋</strong></div>
+                    <div class="flow-step">鳥瞰台版聖托里尼 <strong>外垵漁港</strong> ➔ 拜訪台灣最古老燈塔 <strong>漁翁島燈塔</strong></div>
+                    <div class="flow-step">午後盡情釋放活力，展開激爽的 <strong>水上活動</strong> 體驗</div>
+                    <div class="flow-step">晚餐品嚐超美義式視覺饗宴 <strong>雛菊餐桌</strong></div>
+                </div>
+            </div>
+
+            <div class="day-box">
+                <div class="day-header">📍 Day 3：戰地眷村老街巡禮與伴手禮採購</div>
+                <div class="flow-list">
+                    <div class="flow-step">民宿退房出發 ➔ 走訪 <strong>澎湖蛇頭山｜天空之窗</strong> 拍出網美風照片</div>
+                    <div class="flow-step">前往 <strong>風櫃聽濤</strong> 聆聽玄武岩海蝕洞受海浪拍擊產生的獨特隆隆聲</div>
+                    <div class="flow-step">參觀台灣最早的眷村 <strong>篤行十村</strong>（潘安邦與張雨生故事故事館）</div>
+                    <div class="flow-step">午餐在地老店二選一：<strong>香亭土魠魚羹</strong> 或 <strong>福台排骨麵</strong></div>
+                    <div class="flow-step">漫步全台第一老街 <strong>中央老街</strong>（探訪四眼井、摸乳巷古蹟）</div>
+                    <div class="flow-step">最後衝刺 <strong>購買名產伴手禮</strong>（黑糖糕、干貝醬等）與免稅店貨物提領</div>
+                    <div class="flow-step">提早抵達 <strong>澎湖機場</strong> 辦理報到，搭乘 17:10 班機圓滿返回高雄</div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="food" class="section-card">
+            <h2 class="section-title">3. 澎湖各區域在地美食推薦指南</h2>
+            <div class="food-grid">
+                <div class="food-card">
+                    <h4>🏙️ 馬公市區美食推薦</h4>
+                    <ul class="food-list">
+                        <li><strong>洪家炸粿：</strong>外皮金黃酥脆、內餡滿滿海味。</li>
+                        <li><strong>海城上湯鮮魚粥飯麵擔：</strong>用料實在、鮮甜海鮮湯底。</li>
+                        <li><strong>曾記滿福堂擔仔麵：</strong>老字號傳統古早味人氣麵攤。</li>
+                        <li><strong>海鱻：</strong>老饕極力推薦的現撈尚青海鮮熱炒。</li>
+                        <li><strong>西河食堂：</strong>在地特色家常菜與經典台式海味。</li>
+                        <li><strong>三哥酒釀雞排：</strong>獨特酒釀香氣、外皮脆肉質厚實。</li>
+                        <li><strong>郵局口蔥油餅：</strong>必排隊，加滿滿清爽小黃瓜超解膩。</li>
+                    </ul>
+                </div>
+
+                <div class="food-card">
+                    <h4>🛵 西嶼鄉美食推薦</h4>
+                    <ul class="food-list">
+                        <li><strong>阿挺海鮮：</strong>鯨魚洞旁的活海產、現撈老字號店。</li>
+                        <li><strong>外垵刈包 福气早餐店：</strong>黑糖饅頭夾爆肥嫩控肉、酸菜與厚蛋。</li>
+                        <li><strong>小管先生：</strong>海味鮮甜、料多實在的小管麵線與海膽現剖。</li>
+                    </ul>
+                </div>
+
+                <div class="food-card">
+                    <h4>🛵 白沙鄉美食推薦</h4>
+                    <ul class="food-list">
+                        <li><strong>清峰海鮮：</strong>必點金黃紫菜酥與招牌海產料理。</li>
+                        <li><strong>吉貝小三的店：</strong>離島吉貝的特色澎派海鮮熱炒與冰品。</li>
+                        <li><strong>美東芳牛肉麵：</strong>滷菜極香，搭配獨門特製花椒辣椒醬更絕。</li>
+                        <li><strong>江巷仔內仙人掌冰：</strong>隱藏在巷弄中，CP值高且色彩斑斕的特色冰品。</li>
+                    </ul>
+                </div>
+
+                <div class="food-card">
+                    <h4>🛵 湖西鄉美食推薦</h4>
+                    <ul class="food-list">
+                        <li><strong>老蔡牛肉麵：</strong>湯頭香醇濃郁、牛肉軟嫩的在地名店。</li>
+                        <li><strong>兩個番茄農場：</strong>主打重慶道地麻辣風味與農家特色家常菜。</li>
+                        <li><strong>椒麻皮蛋麵：</strong>香麻微辣帶勁，令人驚艷的乾拌麵。</li>
+                        <li><strong>及林春咖啡館：</strong>隱身林投金沙灘旁，絕美森林系看海咖啡廳。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="notice" class="section-card">
+            <h2 class="section-title">4. 搭機與安全重要注意事項</h2>
+            
+            <div class="alert-box">
+                <h4>✈️ 國內航線法規與報到须知</h4>
+                <ul class="alert-sublist">
+                    <li><strong>攜帶證明文件：</strong>搭乘國內航線請務必攜帶 <span class="highlight-danger">中華民國身分證、駕照或健保卡正本</span>（台灣籍旅客去澎湖<strong>不需看護照</strong>）。</li>
+                    <li><strong>登機報到時間：</strong>國內航班於起飛前 1 小時開始受理報到，旅客最晚須於 <span class="highlight-danger">起飛前 30 分鐘完成報到</span> 與託運，逾時機位將釋出。</li>
+                    <li><strong>免費行李額度：</strong>每人享有 <strong>7 公斤</strong> 免費隨身手提行李，以及 <strong>10 公斤</strong> 的免費託運行李額度。</li>
+                    <li><strong>液體攜帶規範差異：</strong>
+                        <ul>
+                            <li><strong>立榮航空（本次搭乘）：</strong> 無特別單瓶容量限制，包裝妥善不外漏即可放置於手提隨身或託運行李中。</li>
+                            <li><strong>華信航空：</strong> 單瓶液體須在 500 毫升以下，總量不能超過 2,000 毫升。</li>
+                        </ul>
+                    </li>
+                    <li><strong>飛航安全與電子設備：</strong> 飛機上全面禁止吸菸（包含電子菸）。上機後所有電子設備皆須全程開啟 <span class="highlight-danger">飛航模式</span> 並 <span class="highlight-danger">關閉 Wi-Fi</span> 功能。</li>
+                    <li><strong>國內線全程禁用之電子用品：</strong> 行動電話、個人無線電收發報機、各類遙控發射器、CD唱盤。另外，錄影機、電子遊樂器、電腦及週邊設備、計算機、調頻收音機、電視、電子刮鬍刀等電子用品於國內航線亦 <span class="highlight-danger">全程禁用</span>。</li>
+                    <li><strong>嚴禁攜帶危險品：</strong> 嚴禁攜帶任何易燃物、高壓瓦斯氣體、爆裂物、腐蝕性物質等危險物品上機或放入託運行李。</li>
+                </ul>
+            </div>
+
+            <div class="alert-box" style="border-left-color: #047857;">
+                <h4 style="color: #047857;">🛒 離島免稅店購物小秘訣</h4>
+                <ul class="alert-sublist">
+                    <li><strong>免稅提貨流程：</strong> 在澎坊免稅商店（Pier3 三號港）購物不用護照，僅需出示身分證件與回程機票資訊（6/20 B7-9172）。</li>
+                    <li><strong>24小時前結帳：</strong> 建議最晚在搭機前 24 小時完成免稅品結帳，店家才有時間將商品送往機場。當天在馬公機場<strong>通過安全檢查、進入管制區候機室後</strong>，憑提貨單在櫃檯提領商品，當場是帶不走現貨的。</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 澎湖花火節三天兩夜自主遊隨身手冊 · 祝您旅途平安</p>
+        </footer>
+    </div>
+
+</body>
+</html>

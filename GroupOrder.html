@@ -37,8 +37,8 @@
                 <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                     <i class="fa-brands fa-line text-4xl text-[#06C755]"></i>
                 </div>
-                <h2 class="text-xl font-bold text-stone-800 mb-2">LINE 快速授權登入</h2>
-                <p class="text-stone-500 text-sm mb-6">系統將自動綁定您的 LINE 身分，讓您隨時查看與同步先前的點餐紀錄。</p>
+                <h2 class="text-xl font-bold text-stone-800 mb-2">點餐暱稱設定</h2>
+                <p class="text-stone-500 text-sm mb-6">請輸入點餐暱稱。訂單綁定此瀏覽器的 Firebase 匿名身分，並非 LINE 帳號；換手機可能無法找回個人紀錄。</p>
                 
                 <form id="line-login-form" class="space-y-4">
                     <input type="text" id="line-name-input" required placeholder="例如：王小明 (LINE 群組暱稱)" 
@@ -56,7 +56,7 @@
 
                     <button type="submit" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3 px-6 rounded-xl transition duration-200 flex items-center justify-center space-x-2 shadow-lg">
                         <i class="fa-brands fa-line text-xl"></i>
-                        <span>確認身分並進入點餐</span>
+                        <span>開始點餐</span>
                     </button>
                 </form>
             </div>
@@ -98,7 +98,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h2 class="text-xl font-bold text-stone-800">我的雲端歷史點餐明細</h2>
-                        <p class="text-sm text-stone-500">LINE 身分：<span id="current-user-display" class="font-bold text-[#06C755]"></span></p>
+                        <p class="text-sm text-stone-500">點餐暱稱：<span id="current-user-display" class="font-bold text-[#06C755]"></span></p>
                     </div>
                     <button onclick="clearMyOrders()" class="text-red-500 hover:text-red-700 text-sm font-medium">
                         <i class="fa-solid fa-trash mr-1"></i>清空我的點餐
@@ -183,7 +183,7 @@
 
     <!-- 頁尾 -->
     <footer class="bg-stone-100 text-stone-500 text-center py-6 text-xs mt-auto border-t border-stone-200">
-        <p>H&D 客家小館雲端點餐系統 © 2026 • 支援 LINE 登入與歷史紀錄自動同步</p>
+        <p>H&D 客家小館雲端點餐系統 © 2026 • 支援匿名登入與同瀏覽器訂單同步</p>
     </footer>
 
     <!-- Firebase SDK & 應用邏輯 -->
@@ -334,6 +334,8 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
 
+                // 等待 Firebase 還原既有登入狀態，避免每次開頁面都建立新的匿名 UID。
+                await auth.authStateReady();
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else if (!auth.currentUser) {
@@ -347,7 +349,7 @@
                     localStorage.setItem('hd_line_user_session', JSON.stringify(currentUser));
                     document.getElementById('login-modal').classList.add('hidden');
                 } else if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
+                    try { currentUser = JSON.parse(savedUser); } catch (_) { currentUser = null; }
                     document.getElementById('login-modal').classList.add('hidden');
                 } else {
                     document.getElementById('login-modal').classList.remove('hidden');
@@ -387,15 +389,15 @@
                         snapshot.forEach(docSnap => { allCloudOrders[docSnap.id] = docSnap.data(); });
                         updateMyOrdersView();
                         updateSummaryView();
-                    });
+                    }, (err) => { console.error('管理員訂單同步失敗:', err); alert('無法讀取訂單：' + err.message); });
                 } else {
-                    const userDocKey = currentUser && currentUser.lineUserId ? currentUser.lineUserId : currentAuthUserId;
+                    const userDocKey = currentAuthUserId;
                     const ownOrderRef = doc(db, ...ordersPath, userDocKey);
                     unsubscribeOrders = onSnapshot(ownOrderRef, (docSnap) => {
                         allCloudOrders = {};
                         if (docSnap.exists()) allCloudOrders[userDocKey] = docSnap.data();
                         updateMyOrdersView();
-                    });
+                    }, (err) => { console.error('個人訂單同步失敗:', err); alert('無法同步點餐紀錄：' + err.message); });
                 }
             } catch (e) {
                 console.error('設定同步失敗:', e);
@@ -458,7 +460,7 @@
                 renderUserArea();
                 setupRealtimeSync();
                 updateMyOrdersView();
-                showToast(`LINE 登入成功，歡迎 ${name}！歷史點餐已同步載入`);
+                showToast(`歡迎 ${name}！歷史點餐已同步載入`);
             }
         });
 
@@ -474,7 +476,7 @@
                     <span class="font-bold text-white">${currentUser.name}</span>
                     ${!isAdmin ? '<button onclick="changeLineUser()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded ml-1 transition text-emerald-100">切換</button>' : ''}
                 </div>` : `
-                <button onclick="showLoginModal()" class="bg-[#06C755] hover:bg-[#05b34c] text-white px-4 py-1.5 rounded-full text-sm font-bold shadow transition">LINE 暱稱登入</button>`;
+                <button onclick="showLoginModal()" class="bg-[#06C755] hover:bg-[#05b34c] text-white px-4 py-1.5 rounded-full text-sm font-bold shadow transition">設定點餐暱稱</button>`;
             area.innerHTML = userHtml + `<button onclick="adminLogin()" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold">${isAdmin ? '管理者登出' : '管理者登入'}</button>`;
         }
 
@@ -557,8 +559,8 @@
             const optSelect = document.getElementById(`opt-${itemId}`);
             const selectedOption = optSelect ? optSelect.value : '標準';
 
-            const docKey = currentUser.lineUserId || currentAuthUserId;
-            let userRecord = allCloudOrders[docKey] || { name: currentUser.name, avatar: currentUser.avatar, items: [] };
+            const docKey = currentAuthUserId;
+            let userRecord = structuredClone(allCloudOrders[docKey] || { name: currentUser.name, avatar: currentUser.avatar, items: [] });
             userRecord.name = currentUser.name;
             userRecord.avatar = currentUser.avatar;
 
@@ -569,29 +571,25 @@
                 userRecord.items.push({ itemId, itemName, price, quantity: qty, option: selectedOption });
             }
 
-            await saveOrderToCloud(userRecord);
+            try {
+                await saveOrderToCloud(userRecord);
+            } catch (e) { alert('訂單儲存失敗，請重試：' + e.message); return; }
             showToast(`已成功同步「${itemName} (${selectedOption})」x${qty} 至雲端！`);
         }
 
         async function saveOrderToCloud(userRecord) {
-            const docKey = currentUser.lineUserId || currentAuthUserId;
-            allCloudOrders[docKey] = userRecord;
+            if (!db || !currentAuthUserId) throw new Error('Firebase 尚未登入');
+            // 僅在 Firestore 確認寫入成功後，才更新畫面與顯示成功訊息。
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', currentAuthUserId);
+            await setDoc(docRef, userRecord);
+            allCloudOrders[currentAuthUserId] = structuredClone(userRecord);
             updateMyOrdersView();
             updateSummaryView();
-
-            if (db) {
-                try {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', docKey);
-                    await setDoc(docRef, userRecord);
-                } catch (e) {
-                    console.error("雲端儲存失敗:", e);
-                }
-            }
         }
 
         window.updateMyOrdersView = function() {
             if (!currentUser) return;
-            const docKey = currentUser.lineUserId || currentAuthUserId;
+            const docKey = currentAuthUserId;
             const userRecord = allCloudOrders[docKey] || { items: [] };
             const userOrders = userRecord.items || [];
             
@@ -638,22 +636,22 @@
         }
 
         window.removeCartItem = async function(index) {
-            const docKey = currentUser.lineUserId || currentAuthUserId;
+            const docKey = currentAuthUserId;
             if (!allCloudOrders[docKey]) return;
-            let userRecord = allCloudOrders[docKey];
+            let userRecord = structuredClone(allCloudOrders[docKey]);
             userRecord.items.splice(index, 1);
-            await saveOrderToCloud(userRecord);
-            showToast('已更新點餐項目');
+            try { await saveOrderToCloud(userRecord); showToast('已更新點餐項目'); }
+            catch (e) { alert('更新失敗：' + e.message); }
         }
 
         window.clearMyOrders = async function() {
-            const docKey = currentUser.lineUserId || currentAuthUserId;
+            const docKey = currentAuthUserId;
             if (!allCloudOrders[docKey]) return;
             if (confirm('確定要清空您在雲端的所有歷史點餐紀錄嗎？')) {
-                let userRecord = allCloudOrders[docKey];
+                let userRecord = structuredClone(allCloudOrders[docKey]);
                 userRecord.items = [];
-                await saveOrderToCloud(userRecord);
-                showToast('已清空您的點餐清單');
+                try { await saveOrderToCloud(userRecord); showToast('已清空您的點餐清單'); }
+                catch (e) { alert('清空失敗：' + e.message); }
             }
         }
 
@@ -745,7 +743,7 @@
 
         window.copyLineText = function() {
             if (!currentUser) return;
-            const docKey = currentUser.lineUserId || currentAuthUserId;
+            const docKey = currentAuthUserId;
             const userRecord = allCloudOrders[docKey] || { items: [] };
             if (userRecord.items.length === 0) {
                 alert('您的點餐清單為空！');

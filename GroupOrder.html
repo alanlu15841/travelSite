@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H&D 客家小館 - LINE 群組雲端點餐與歷史紀錄</title>
+    <title>承恩 & 鈺瑄｜新居暖宴・2027 入厝點餐</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -59,6 +59,34 @@
         @media (max-width:640px) { .desktop-tabs { display:none!important; } .hero h2 { font-size:27px; } #menu-container .grid { grid-template-columns:1fr!important; gap:11px!important; } #menu-container .grid > div { padding:16px!important; } #user-info-area .bg-emerald-900\/60 { padding:4px 6px!important; } header h1 { max-width:155px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } }
         @media (min-width:641px) { .bottom-nav { max-width:580px; left:50%; transform:translateX(-50%); border-radius:18px 18px 0 0; } .hero h2 { font-size:37px; } }
 
+
+        /* 2027 housewarming invitation refinements */
+        .brand-sub { color:#d6c49c; font-weight:500; }
+        .hero { min-height:370px; display:flex; justify-content:center; align-items:center; text-align:center; padding:37px 18px 32px; background:radial-gradient(ellipse at 50% -10%,rgba(217,180,110,.18),transparent 62%),linear-gradient(145deg,#123e34 0%,#092923 75%); border:1px solid rgba(223,191,130,.36); box-shadow:0 15px 38px rgba(7,47,36,.18); }
+        .hero:after { content:none; }
+        .hero-content { position:relative; z-index:2; width:100%; }
+        .hero-ornament { position:absolute; width:245px; height:245px; border:1px solid rgba(229,202,146,.16); border-radius:50%; pointer-events:none; }
+        .hero-ornament-one { left:-150px; top:-135px; }
+        .hero-ornament-two { right:-150px; bottom:-145px; }
+        .hero-kicker { font-size:9px; letter-spacing:.19em; justify-content:center; }
+        .hero-kicker i { font-size:8px; }
+        .hero-line { height:1px; width:42px; background:#d8b777; margin:18px auto 13px; }
+        .hero .hero-host { color:#eedbb4; font-size:18px; letter-spacing:.24em; max-width:none; font-weight:700; }
+        .hero-host span { font-family:Georgia,serif; font-style:italic; padding:0 4px; color:#d8b777; }
+        .hero h2 { font-size:40px!important; letter-spacing:.15em; margin:9px 0 1px; line-height:1.3; }
+        .hero-dot { color:#d8b777; }
+        .hero .hero-en { max-width:none; color:#d8b777; letter-spacing:.22em; font-size:9px; font-family:Georgia,serif; margin:7px 0 20px; }
+        .hero .hero-description { max-width:none; color:#e2e7df; font-size:12px; line-height:2; }
+        .hero-details { display:flex; align-items:center; justify-content:center; gap:13px; margin-top:24px; padding-top:18px; border-top:1px solid rgba(226,205,163,.2); color:#f2e2bd; font-size:10px; letter-spacing:.045em; }
+        .hero-details i { margin-right:4px; }
+        .hero-separator { height:14px; width:1px; background:rgba(242,226,189,.3); }
+        .invitation-note { display:flex; align-items:center; gap:11px; background:#fff; padding:15px 16px; border:1px solid #eee8d8; border-radius:17px; margin:-3px 0 19px; box-shadow:0 5px 18px rgba(17,50,41,.035); }
+        .invitation-spark { font-size:24px; color:#c8a665; }
+        .invitation-note div { display:flex; flex-direction:column; flex:1; gap:3px; }
+        .invitation-note strong { color:#173c32; font-size:13px; }
+        .invitation-note small { color:#829088; font-size:10px; }
+        .invitation-note > i { color:#c4aa74; font-size:13px; }
+        @media(max-width:390px) { .brand-sub { display:none; } .hero { min-height:345px; } .hero h2 { font-size:35px!important; } .hero-details { gap:9px; font-size:9px; } }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
@@ -68,7 +96,7 @@
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fa-solid fa-utensils text-amber-300 text-xl"></i>
-                <h1 class="text-lg font-bold tracking-wider">H&D 客家小館 • 雲端點餐系統</h1>
+                <h1 class="text-lg font-bold tracking-wider">承恩 & 鈺瑄 <span class="brand-sub">｜新居暖宴</span></h1>
             </div>
             <div id="user-info-area" class="flex items-center space-x-3">
                 <!-- 動態帶入 LINE 登入狀態 -->
@@ -78,12 +106,20 @@
 
     <!-- 主要容器 -->
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
-        <section class="hero" aria-label="入厝點餐歡迎區">
-            <span class="hero-kicker"><i class="fa-solid fa-sparkles"></i> HOUSEWARMING · 2027.01.01</span>
-            <h2>新居開席，<br>好菜一起點。</h2>
-            <p>歡迎來到我們的入厝餐桌。挑幾道喜歡的好味道，讓這場相聚更有滋味。</p>
-            <span class="hero-note"><i class="fa-solid fa-check-circle" style="color:#e3c38a"></i> 雲端保存點餐紀錄 · 隨時加點</span>
+        <section class="hero" aria-label="承恩與鈺瑄入厝暖宴歡迎區">
+            <div class="hero-ornament hero-ornament-one"></div>
+            <div class="hero-ornament hero-ornament-two"></div>
+            <div class="hero-content">
+                <span class="hero-kicker"><i class="fa-solid fa-star-of-life"></i> THE HOUSEWARMING TABLE <i class="fa-solid fa-star-of-life"></i></span>
+                <div class="hero-line"></div>
+                <p class="hero-host">承恩 <span>&</span> 鈺瑄</p>
+                <h2>新居暖宴<span class="hero-dot">。</span></h2>
+                <p class="hero-en">A NEW HOME, A SHARED TABLE</p>
+                <p class="hero-description">家的第一場盛宴，因為有你更圓滿。<br>選幾道喜歡的好菜，一起分享新年的好滋味。</p>
+                <div class="hero-details"><span><i class="fa-regular fa-calendar"></i> 2027 / 01 / 01</span><span class="hero-separator"></span><span><i class="fa-solid fa-champagne-glasses"></i> 元旦 · 入厝暖宴</span></div>
+            </div>
         </section>
+        <div class="invitation-note"><span class="invitation-spark">✦</span><div><strong>歡迎入席，挑選你喜歡的料理</strong><small>點餐會自動保存至雲端，稍後也能繼續加點</small></div><i class="fa-solid fa-arrow-down"></i></div>
 
         <!-- LINE 登入模態視窗 -->
         <div id="login-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
@@ -242,7 +278,7 @@
 
     <!-- 頁尾 -->
     <footer class="bg-stone-100 text-stone-500 text-center py-6 text-xs mt-auto border-t border-stone-200">
-        <p>H&D 客家小館雲端點餐系統 © 2026 • 支援匿名登入與同瀏覽器訂單同步</p>
+        <p>承恩 & 鈺瑄｜新居暖宴 © 2027 • 支援匿名登入與同瀏覽器訂單同步</p>
     </footer>
 
     <!-- Firebase SDK & 應用邏輯 -->
